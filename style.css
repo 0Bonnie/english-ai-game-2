@@ -1,0 +1,30 @@
+body {
+  background: #dff3ff;
+  text-align: center;
+  font-family: Arial;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 20px;
+  background: #69b7ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.rabbit {
+  font-size: 80px;
+}
+
+.author {
+  background: white;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+}
