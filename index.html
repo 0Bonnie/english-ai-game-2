@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Game 2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 封面 -->
+  <section id="cover">
+    <div class="rabbit">🐰</div>
+    <div class="speech">Welcome to Introverts: Quietly Brilliant!</div>
+
+    <h1>English game 2</h1>
+
+    <div class="author">
+      <p>作者：林姵彣 Bonnie</p>
+      <p>學號：414170534</p>
+    </div>
+
+    <button onclick="startGame()">START</button>
+  </section>
+
+  <!-- 遊戲 -->
+  <section id="game" class="hidden">
+    <h2>🔨 Carrot Game 🥕</h2>
+    <p>Time: <span id="time">300</span></p>
+    <p>Score: <span id="score">0</span></p>
+
+    <div id="questionBox"></div>
+
+    <button onclick="answer(0)" id="choice0"></button>
+    <button onclick="answer(1)" id="choice1"></button>
+    <button onclick="answer(2)" id="choice2"></button>
+    <button onclick="answer(3)" id="choice3"></button>
+
+    <div id="animation"></div>
+  </section>
+
+  <!-- 結果 -->
+  <section id="result" class="hidden">
+    <h1>Game Over</h1>
+    <p>Your score: <span id="finalScore"></span></p>
+    <p>Best score: <span id="bestScore"></span></p>
+    <div id="recordMessage"></div>
+  </section>
+
+  <!-- 音效 -->
+  <audio id="dingSound" src="sounds/dingdong.mp3"></audio>
+  <audio id="greatSound" src="sounds/great.mp3"></audio>
+  <audio id="oopsSound" src="sounds/oops.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
