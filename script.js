@@ -1,99 +1,74 @@
 let score = 0;
 let time = 300;
-let currentQuestion;
 let timer;
+let currentQuestion;
+
+const holes = document.querySelectorAll(".hole");
 
 const questions = [
-  {
-    q: "What does introvert mean?",
-    choices: ["外向的人", "內向的人", "老師", "學生"],
-    answer: 1,
-    level: 1
-  },
-  {
-    q: "reflection means?",
-    choices: ["深思", "吃飯", "睡覺", "跑步"],
-    answer: 0,
-    level: 1
-  },
-  {
-    q: "value A over B?",
-    choices: ["比較A和B", "重視A勝過B", "放棄A", "忽略B"],
-    answer: 1,
-    level: 2
-  },
-  {
-    q: "be worth ___?",
-    choices: ["read", "reading", "to read", "reads"],
-    answer: 1,
-    level: 3
-  }
+  {q:"introvert means?",choices:["外向","內向","老師","學生"],answer:1,level:1},
+  {q:"be worth ___?",choices:["read","reading","to read","reads"],answer:1,level:3}
 ];
 
-function startGame() {
+function startGame(){
   document.getElementById("cover").classList.add("hidden");
   document.getElementById("game").classList.remove("hidden");
 
   nextQuestion();
 
-  timer = setInterval(() => {
+  timer = setInterval(()=>{
     time--;
-    document.getElementById("time").textContent = time;
+    document.getElementById("time").textContent=time;
+    if(time<=0) endGame();
+  },1000);
 
-    if (time <= 0) {
-      endGame();
-    }
-  }, 1000);
+  spawn();
 }
 
-function nextQuestion() {
-  currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-
+function nextQuestion(){
+  currentQuestion = questions[Math.floor(Math.random()*questions.length)];
   document.getElementById("questionBox").textContent = currentQuestion.q;
-
-  currentQuestion.choices.forEach((c, i) => {
-    document.getElementById("choice" + i).textContent = c;
-  });
 }
 
-function playSound(id) {
-  const s = document.getElementById(id);
-  s.currentTime = 0;
-  s.play();
+function spawn(){
+  setInterval(()=>{
+    holes.forEach(h=>h.textContent="");
+
+    let shuffled = [...currentQuestion.choices].sort(()=>Math.random()-0.5);
+
+    holes.forEach((h,i)=>{
+      h.textContent = shuffled[i];
+      h.dataset.correct = (shuffled[i]===currentQuestion.choices[currentQuestion.answer]);
+    });
+
+  },1000);
 }
 
-function answer(i) {
-  if (i === currentQuestion.answer) {
-    score += currentQuestion.level;
-    playSound("dingSound");
+function hit(i){
+  let h = holes[i];
 
-    if (currentQuestion.level === 3) {
-      playSound("greatSound");
-    }
-  } else {
-    score -= 3;
-    playSound("oopsSound");
+  if(h.dataset.correct==="true"){
+    score+=1;
+    h.classList.add("glow");
+  }else{
+    score-=3;
   }
 
-  document.getElementById("score").textContent = score;
-
-  nextQuestion();
+  document.getElementById("score").textContent=score;
 }
 
-function endGame() {
+function endGame(){
   clearInterval(timer);
-
   document.getElementById("game").classList.add("hidden");
   document.getElementById("result").classList.remove("hidden");
 
-  document.getElementById("finalScore").textContent = score;
+  document.getElementById("finalScore").textContent="Score: "+score;
+}
 
-  let best = localStorage.getItem("best") || 0;
-
-  if (score > best) {
-    localStorage.setItem("best", score);
-    document.getElementById("recordMessage").textContent = "🐰 恭喜破紀錄！";
-  }
-
-  document.getElementById("bestScore").textContent = best;
+function saveScore(){
+  let name=document.getElementById("playerName").value;
+  let board=JSON.parse(localStorage.getItem("board")||"[]");
+  board.push({name,score});
+  board.sort((a,b)=>b.score-a.score);
+  localStorage.setItem("board",JSON.stringify(board));
 }
