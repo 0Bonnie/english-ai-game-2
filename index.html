@@ -1,54 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Game 2</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Game 2</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div id="hammerCursor">🔨</div>
+  <canvas id="fireworks"></canvas>
 
-<section id="cover">
-  <img src="images/rabbit.png" class="rabbit">
-  <div id="dialogue"></div>
-  <h1 id="title" class="hidden">English game 2</h1>
-  <button id="startBtn" class="hidden" onclick="startGame()">START</button>
+  <section id="cover" class="screen">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
 
-  <p>作者：林姵彣 Bonnie<br>學號：414170534</p>
-</section>
+    <div class="intro-card">
+      <div class="rabbit-wrap">
+        <div class="rabbit-img">🐰</div>
+        <div class="speech-bubble" id="dialogue"></div>
+      </div>
 
-<section id="game" class="hidden">
-  <p>Time: <span id="time">300</span></p>
-  <p>Score: <span id="score">0</span></p>
+      <h1 id="title" class="hidden title-glow">English game 2</h1>
+      <p class="subtitle">Introverts: Quietly Brilliant</p>
 
-  <div id="questionBox"></div>
+      <div class="author-box">
+        作者：林姵彣 Bonnie<br />
+        學號：414170534
+      </div>
 
-  <div class="grid">
-    <div class="hole" onclick="hit(0)"></div>
-    <div class="hole" onclick="hit(1)"></div>
-    <div class="hole" onclick="hit(2)"></div>
-    <div class="hole" onclick="hit(3)"></div>
-  </div>
+      <button id="startBtn" class="primary-btn hidden" onclick="startGame()">START</button>
+    </div>
+  </section>
 
-  <div id="animation"></div>
-</section>
+  <section id="game" class="screen hidden">
+    <header class="game-header">
+      <div>
+        <h2>🔨 Whack the Carrot English Game 🥕</h2>
+        <p class="small">Hit the correct answer!</p>
+      </div>
+      <div class="stats">
+        <div>⏱️ <span id="time">300</span>s</div>
+        <div>⭐ <span id="score">0</span></div>
+      </div>
+    </header>
 
-<section id="result" class="hidden">
-  <h1>Game Over</h1>
-  <p id="finalScore"></p>
+    <main class="game-card">
+      <div id="levelBadge">Level</div>
+      <div id="questionBox">Question</div>
+      <div class="grid">
+        <button class="hole" onclick="hit(0)"></button>
+        <button class="hole" onclick="hit(1)"></button>
+        <button class="hole" onclick="hit(2)"></button>
+        <button class="hole" onclick="hit(3)"></button>
+      </div>
+      <div id="animation"></div>
+    </main>
+  </section>
 
-  <input id="playerName" placeholder="Name">
-  <button onclick="saveScore()">Save</button>
+  <section id="result" class="screen hidden">
+    <div class="result-card">
+      <div class="big-rabbit">🐰</div>
+      <h1>Game Over</h1>
+      <p class="score-line">Your score: <span id="finalScore">0</span></p>
 
-  <ol id="leaderboard"></ol>
-</section>
+      <input id="playerName" maxlength="16" placeholder="Enter your name" />
+      <button class="primary-btn" onclick="saveScore()">Save Score</button>
 
-<audio id="dingSound" src="sounds/ding.mp3"></audio>
-<audio id="oopsSound" src="sounds/oops.mp3"></audio>
+      <h2>🏆 Leaderboard</h2>
+      <ol id="leaderboard"></ol>
 
-<canvas id="fireworks"></canvas>
+      <button class="secondary-btn" onclick="location.reload()">Play Again</button>
+    </div>
+  </section>
 
-<script src="script.js"></script>
+  <div id="popup" class="hidden">Great!</div>
 
+  <!-- Firebase optional:
+       1. Create Firebase project.
+       2. Copy your Firebase config.
+       3. Paste it into firebase-config.js.
+       4. This game will use cloud leaderboard automatically.
+  -->
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
